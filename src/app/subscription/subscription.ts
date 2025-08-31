@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-subscription',
   imports: [],
   templateUrl: './subscription.html',
-  styleUrl: './subscription.scss'
+  styleUrl: './subscription.scss',
 })
-export class Subscription {
-
-}
+export class Subscription {}

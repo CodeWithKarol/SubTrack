@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-reminder',
   imports: [],
   templateUrl: './reminder.html',
-  styleUrl: './reminder.scss'
+  styleUrl: './reminder.scss',
 })
-export class Reminder {
-
-}
+export class Reminder {}
