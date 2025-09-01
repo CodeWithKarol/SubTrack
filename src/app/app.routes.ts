@@ -2,11 +2,17 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'subscriptions',
-    loadComponent: () => import('./subscription/subscription').then((c) => c.Subscription),
+    path: 'dashboard',
+    loadComponent: () => import('./dashboard/dashboard').then((c) => c.Dashboard),
   },
-  { path: 'expenses', loadComponent: () => import('./expense/expense').then((c) => c.Expense) },
-  { path: 'reminders', loadComponent: () => import('./reminder/reminder').then((c) => c.Reminder) },
-  { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
-  { path: '**', redirectTo: 'subscriptions' },
+  {
+    path: 'analytics',
+    loadComponent: () => import('./analytics/analytics').then((c) => c.Analytics),
+  },
+  {
+    path: 'reminders',
+    loadComponent: () => import('./reminders/reminders').then((c) => c.Reminders),
+  },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '**', redirectTo: 'dashboard' },
 ];
