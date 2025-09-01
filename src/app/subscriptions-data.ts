@@ -5,7 +5,7 @@ import { Subscription } from './subscription.model';
   providedIn: 'root',
 })
 export class Subscriptions {
-  readonly subscriptions = signal<Subscription[]>([
+  private subscriptions = signal<Subscription[]>([
     {
       id: 1,
       name: 'Netflix',
@@ -68,5 +68,17 @@ export class Subscriptions {
     },
   ]);
 
+  subscriptionsData = computed(() => this.subscriptions());
+
   totalCost = computed(() => this.subscriptions().reduce((sum, sub) => sum + sub.cost, 0));
+
+  removeSubscription(id: number): void {
+    this.subscriptions.update((subs) => subs.filter((sub) => sub.id !== id));
+  }
+
+  updateSubscription(updatedSub: Subscription): void {
+    this.subscriptions.update((subs) =>
+      subs.map((sub) => (sub.id === updatedSub.id ? updatedSub : sub)),
+    );
+  }
 }

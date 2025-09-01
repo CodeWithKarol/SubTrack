@@ -1,4 +1,4 @@
-<app-header />
+<app-header [totalCost]="totalCost()" />
 
 <div class="px-4">
   <h1>Your Subscriptions</h1>
@@ -14,8 +14,12 @@
             </div>
           </div>
           <div class="flex">
-            <div>Edit</div>
-            <div>Delete</div>
+            <button matIconButton (click)="editSubscription(subscription.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button matIconButton (click)="deleteSubscription(subscription.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </div>
         </div>
         <div class="flex justify-between items-center mt-4">
@@ -27,9 +31,10 @@
           <div>Status: {{ subscription.status }}</div>
         </div>
       </mat-card>
+    } @empty {
+      <div>No subscriptions found. Add a new subscription to get started!</div>
     }
   </div>
 
   <h1>Spending Overview</h1>
-  {{ totalCost() | currency: 'USD' : 'symbol' : '1.2-2' }}
 </div>
