@@ -9,11 +9,11 @@ import {
 } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-delete-subscription-dialog',
+  selector: 'app-edit-subscription-dialog',
   imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule],
-  templateUrl: './delete-subscription-dialog.html',
-  styleUrl: './delete-subscription-dialog.scss',
+  templateUrl: './edit-subscription-dialog.html',
+  styleUrl: './edit-subscription-dialog.scss',
 })
-export class DeleteSubscriptionDialog {
+export class EditSubscriptionDialog {
   data = inject(MAT_DIALOG_DATA);
 }

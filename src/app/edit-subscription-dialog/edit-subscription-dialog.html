@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Delete Subscription</h2>
+
+<mat-dialog-content>
+  <p>
+    Are you sure you want to delete <span class="font-semibold">{{ data.name }}</span
+    >?
+  </p>
+  <p>This action cannot be undone.</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button matButton mat-dialog-close>Cancel</button>
+  <button matButton="filled" [mat-dialog-close]="true" cdkFocusInitial>Delete</button>
+</mat-dialog-actions>

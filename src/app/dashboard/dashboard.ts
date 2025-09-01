@@ -8,6 +8,7 @@ import { Subscription } from '../subscription.model';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DeleteSubscriptionDialog } from '../delete-subscription-dialog/delete-subscription-dialog';
 import { filter, take, tap } from 'rxjs';
+import { EditSubscriptionDialog } from '../edit-subscription-dialog/edit-subscription-dialog';
 
 @Component({
   selector: 'app-dashboard',
@@ -48,6 +49,8 @@ export class Dashboard {
       logo: '🔄',
       description: 'Updated Description',
     };
+
+    this.dialog.open(EditSubscriptionDialog, { data: { subscription: updatedSubscription } });
 
     this.subscriptionsData.updateSubscription(updatedSubscription);
   }
