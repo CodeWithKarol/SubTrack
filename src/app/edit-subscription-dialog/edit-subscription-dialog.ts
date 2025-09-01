@@ -19,12 +19,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
 import { Subscription, SubscriptionCategory } from '../subscription.model';
+import moment, { Moment } from 'moment';
+
+export const CUSTOM_DATE_FORMATS = {
+  parse: { dateInput: 'yyyy-MM-DD' },
+  display: {
+    dateInput: 'yyyy-MM-DD',
+    monthYearLabel: 'MMM yyyy',
+    dateA11yLabel: 'yyyy-MM-DD',
+    monthYearA11yLabel: 'MMM yyyy',
+  },
+};
 
 @Component({
   selector: 'app-edit-subscription-dialog',
-  providers: [provideNativeDateAdapter()],
+  providers: [provideMomentDateAdapter(CUSTOM_DATE_FORMATS)],
   imports: [
     MatDialogTitle,
     MatDialogContent,
@@ -56,10 +67,13 @@ export class EditSubscriptionDialog {
     nonNullable: true,
     validators: [Validators.required, Validators.min(0)],
   });
-  protected subscriptionBillingDate = new FormControl<string>(this.data.subscription.billingDate, {
-    nonNullable: true,
-    validators: [Validators.required],
-  });
+  protected subscriptionBillingDate = new FormControl<Moment>(
+    moment(this.data.subscription.billingDate),
+    {
+      nonNullable: true,
+      validators: [Validators.required],
+    },
+  );
   protected subscriptionDescription = new FormControl<string>(this.data.subscription.description, {
     nonNullable: true,
     validators: [],
@@ -108,7 +122,7 @@ export class EditSubscriptionDialog {
       name: this.subscriptionName.value,
       category: this.subscriptionCategory.value,
       cost: this.subscriptionCost.value,
-      billingDate: this.subscriptionBillingDate.value,
+      billingDate: this.subscriptionBillingDate.value.format('YYYY-MM-DD'),
       description: this.subscriptionDescription.value,
       logo: this.subscriptionIcon.value,
     };
