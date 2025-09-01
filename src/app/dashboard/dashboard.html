@@ -1,1 +1,15 @@
-<p>dashboard works!</p>
+<div class="px-4">
+  <h1>Your Subscriptions</h1>
+  <div class="flex gap-4 flex-wrap">
+    @for (subscription of subscriptions; track subscription.id) {
+      <mat-card appearance="outlined" class="flex-1 min-w-[200px]">
+        <mat-card-header>
+          <mat-card-title>{{ subscription.name }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content></mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  <h1>Spending Overview</h1>
+</div>
