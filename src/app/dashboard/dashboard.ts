@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Subscription } from '../subscription.model';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DeleteSubscriptionDialog } from '../delete-subscription-dialog/delete-subscription-dialog';
-import { take, tap } from 'rxjs';
+import { filter, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,6 +31,7 @@ export class Dashboard {
       .afterClosed()
       .pipe(
         take(1),
+        filter((result: boolean) => Boolean(result)),
         tap(() => this.subscriptionsData.removeSubscription(subscriptionId)),
       )
       .subscribe();
