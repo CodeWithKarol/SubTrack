@@ -1,7 +1,9 @@
+<app-header />
+
 <div class="px-4">
   <h1>Your Subscriptions</h1>
   <div class="flex gap-4 flex-wrap">
-    @for (subscription of subscriptions; track subscription.id) {
+    @for (subscription of subscriptions(); track subscription.id) {
       <mat-card appearance="outlined" class="flex-1 min-w-[300px] p-6">
         <div class="flex justify-between">
           <div class="flex gap-4 items-center">
@@ -29,4 +31,5 @@
   </div>
 
   <h1>Spending Overview</h1>
+  {{ totalCost() | currency: 'USD' : 'symbol' : '1.2-2' }}
 </div>
