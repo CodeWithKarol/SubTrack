@@ -1,14 +1,48 @@
-<h2 mat-dialog-title>Delete Subscription</h2>
+<h2 mat-dialog-title>Edit Subscription</h2>
 
 <mat-dialog-content>
-  <p>
-    Are you sure you want to delete <span class="font-semibold">{{ data.name }}</span
-    >?
-  </p>
-  <p>This action cannot be undone.</p>
+  <form [formGroup]="form" class="flex flex-col gap-4 w-100">
+    <mat-form-field>
+      <mat-label>Subscription Name</mat-label>
+      <input matInput formControlName="subscriptionName" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Category</mat-label>
+      <mat-select [(value)]="selectedCategory" formControlName="subscriptionCategory">
+        <mat-option>--- Select Category ---</mat-option>
+        @for (option of POPULAR_SUBSCRIPTION_CATEGORIES; track option) {
+          <mat-option [value]="option">{{ option }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Cost</mat-label>
+      <input matInput type="number" formControlName="subscriptionCost" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Billing Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="subscriptionBillingDate" />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea matInput rows="3" formControlName="subscriptionDescription"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Icon URL</mat-label>
+      <input matInput formControlName="subscriptionIcon" />
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
   <button matButton mat-dialog-close>Cancel</button>
-  <button matButton="filled" [mat-dialog-close]="true" cdkFocusInitial>Delete</button>
+  <button matButton="filled" cdkFocusInitial (click)="submitForm()">Submit</button>
 </mat-dialog-actions>

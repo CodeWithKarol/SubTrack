@@ -25,9 +25,13 @@ export class Dashboard {
   deleteSubscription(subscriptionId: number): void {
     const subscription = this.subscriptions().find((sub) => sub.id === subscriptionId);
 
+    if (!subscription) {
+      return;
+    }
+
     this.dialog
       .open(DeleteSubscriptionDialog, {
-        data: { name: subscription?.name ?? '' },
+        data: { name: subscription.name },
       })
       .afterClosed()
       .pipe(
@@ -39,19 +43,12 @@ export class Dashboard {
   }
 
   editSubscription(subscriptionId: number): void {
-    const updatedSubscription: Subscription = {
-      id: subscriptionId,
-      name: 'Updated Name',
-      category: 'Updated Category',
-      cost: 19.99,
-      billingDate: '2025-10-01',
-      status: 'active',
-      logo: '🔄',
-      description: 'Updated Description',
-    };
+    const subscription = this.subscriptions().find((sub) => sub.id === subscriptionId);
 
-    this.dialog.open(EditSubscriptionDialog, { data: { subscription: updatedSubscription } });
+    if (!subscription) {
+      return;
+    }
 
-    this.subscriptionsData.updateSubscription(updatedSubscription);
+    this.dialog.open(EditSubscriptionDialog, { data: { subscription } });
   }
 }
