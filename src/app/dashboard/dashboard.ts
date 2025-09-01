@@ -49,6 +49,16 @@ export class Dashboard {
       return;
     }
 
-    this.dialog.open(EditSubscriptionDialog, { data: { subscription } });
+    this.dialog
+      .open(EditSubscriptionDialog, { data: { subscription } })
+      .afterClosed()
+      .pipe(
+        take(1),
+        filter((result: Subscription) => Boolean(result)),
+        tap((updatedSubscription: Subscription) =>
+          this.subscriptionsData.updateSubscription(updatedSubscription),
+        ),
+      )
+      .subscribe();
   }
 }

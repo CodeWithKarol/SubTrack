@@ -9,7 +9,7 @@ export class Subscriptions {
     {
       id: 1,
       name: 'Netflix',
-      category: 'Entertainment',
+      category: 'Streaming Video',
       cost: 15.99,
       billingDate: '2025-09-15',
       status: 'active',
@@ -19,7 +19,7 @@ export class Subscriptions {
     {
       id: 2,
       name: 'Spotify',
-      category: 'Entertainment',
+      category: 'Streaming Music',
       cost: 9.99,
       billingDate: '2025-09-08',
       status: 'expiring',
@@ -49,7 +49,7 @@ export class Subscriptions {
     {
       id: 5,
       name: 'New York Times',
-      category: 'News',
+      category: 'News & Magazines',
       cost: 4.25,
       billingDate: '2025-09-18',
       status: 'active',

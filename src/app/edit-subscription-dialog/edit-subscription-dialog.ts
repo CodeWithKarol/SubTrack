@@ -12,6 +12,7 @@ import {
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
+  MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { Subscription, SubscriptionCategory } from '../subscription.model';
 
 @Component({
   selector: 'app-edit-subscription-dialog',
@@ -41,6 +43,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 })
 export class EditSubscriptionDialog {
   private readonly data = inject(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject(MatDialogRef<EditSubscriptionDialog>);
   protected subscriptionName = new FormControl<string>(this.data.subscription.name, {
     nonNullable: true,
     validators: [Validators.required, Validators.minLength(3)],
@@ -76,7 +79,7 @@ export class EditSubscriptionDialog {
   });
 
   protected selectedCategory = signal(this.data.subscription.category);
-  protected readonly POPULAR_SUBSCRIPTION_CATEGORIES = [
+  protected readonly POPULAR_SUBSCRIPTION_CATEGORIES: SubscriptionCategory[] = [
     'Streaming Video',
     'Streaming Music',
     'Gaming',
@@ -100,7 +103,7 @@ export class EditSubscriptionDialog {
       return;
     }
 
-    const updatedSubscription = {
+    const updatedSubscription: Subscription = {
       ...this.data.subscription,
       name: this.subscriptionName.value,
       category: this.subscriptionCategory.value,
@@ -110,6 +113,6 @@ export class EditSubscriptionDialog {
       logo: this.subscriptionIcon.value,
     };
 
-    console.log('Updated Subscription:', updatedSubscription);
+    this.dialogRef.close(updatedSubscription);
   }
 }
