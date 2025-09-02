@@ -1,19 +1,22 @@
-<app-header [totalCost]="totalCost()" />
+<app-header [totalCost]="totalCost()"/>
 
 <div class="px-4">
   <h1>Your Subscriptions</h1>
   <div class="flex gap-4 flex-wrap">
     @for (subscription of subscriptions(); track subscription.id) {
-      <mat-card appearance="outlined" class="flex-1 min-w-[300px] p-6">
-        <div class="flex justify-between">
+      <mat-card
+        appearance="outlined"
+        class="flex-1 min-w-[350px] p-6"
+        [class]="'status-' + subscription.status.toLowerCase()">
+        <div class="flex justify-between subscription-header">
           <div class="flex gap-4 items-center">
-            <div>{{ subscription.logo }}</div>
+            <div class="subscription-logo">{{ subscription.logo }}</div>
             <div class="flex flex-col">
-              <div>{{ subscription.name }}</div>
-              <div>{{ subscription.category }}</div>
+              <div class="subscription-name">{{ subscription.name }}</div>
+              <div class="subscription-category">{{ subscription.category }}</div>
             </div>
           </div>
-          <div class="flex">
+          <div class="flex gap-1 subscription-actions">
             <button matIconButton (click)="editSubscription(subscription.id)">
               <mat-icon>edit</mat-icon>
             </button>
@@ -22,13 +25,15 @@
             </button>
           </div>
         </div>
-        <div class="flex justify-between items-center mt-4">
+        <div class="flex justify-between items-center mt-4 subscription-details">
           <div class="flex flex-col">
-            <div>Cost: ${{ subscription.cost }}</div>
-            <div>Billing Date: {{ subscription.billingDate }}</div>
+            <div class="cost">${{ subscription.cost }}</div>
+            <div class="billing-date">Next: {{ subscription.billingDate }}</div>
           </div>
 
-          <div>Status: {{ subscription.status }}</div>
+          <span class="status-badge" [class]="subscription.status.toLowerCase()">{{
+              subscription.status
+            }}</span>
         </div>
       </mat-card>
     } @empty {

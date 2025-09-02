@@ -1,13 +1,23 @@
-<mat-toolbar>
-  <div class="flex flex-col">
-    <div class="flex gap-2">
-      <mat-icon>account_balance</mat-icon>
-      <span>SubTrack</span>
+<mat-toolbar class="header-toolbar">
+  <div class="brand-section">
+    <div class="brand-title">
+      <mat-icon class="brand-icon">account_balance_wallet</mat-icon>
+      <span class="app-name">SubTrack</span>
     </div>
-    <span>Manage your subscriptions</span>
+    <span class="brand-subtitle">Manage your subscriptions</span>
   </div>
 
   <div class="spacer"></div>
 
-  <div>{{ totalCost() | currency }}</div>
+  <div class="header-actions">
+    <div class="total-section">
+      <div class="total-label">Monthly Total</div>
+      <div class="total-amount">{{ totalCost() | currency }}</div>
+    </div>
+
+    <div class="notifications-section">
+      <mat-icon class="notification-icon">notifications</mat-icon>
+      <span class="notification-text">Notifications</span>
+    </div>
+  </div>
 </mat-toolbar>
