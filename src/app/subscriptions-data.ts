@@ -13,7 +13,7 @@ export class Subscriptions {
       cost: 15.99,
       billingDate: '2025-09-15',
       status: 'active',
-      logo: '🎬',
+      logo: 'video_library',
       description: 'Streaming service',
     },
     {
@@ -23,7 +23,7 @@ export class Subscriptions {
       cost: 9.99,
       billingDate: '2025-09-08',
       status: 'expiring',
-      logo: '🎵',
+      logo: 'music_note',
       description: 'Music streaming',
     },
     {
@@ -33,7 +33,7 @@ export class Subscriptions {
       cost: 52.99,
       billingDate: '2025-09-22',
       status: 'active',
-      logo: '🎨',
+      logo: 'developer_mode',
       description: 'Design software suite',
     },
     {
@@ -43,7 +43,7 @@ export class Subscriptions {
       cost: 6.99,
       billingDate: '2025-09-03',
       status: 'expiring',
-      logo: '📄',
+      logo: 'developer_mode',
       description: 'Office productivity suite',
     },
     {
@@ -53,7 +53,7 @@ export class Subscriptions {
       cost: 4.25,
       billingDate: '2025-09-18',
       status: 'active',
-      logo: '📰',
+      logo: 'article',
       description: 'Digital newspaper',
     },
     {
@@ -63,7 +63,7 @@ export class Subscriptions {
       cost: 4.0,
       billingDate: '2025-09-12',
       status: 'active',
-      logo: '💻',
+      logo: 'developer_mode',
       description: 'Code repository hosting',
     },
   ]);

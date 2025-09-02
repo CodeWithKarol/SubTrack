@@ -11,7 +11,9 @@
           [class]="'status-' + subscription.status.toLowerCase()">
           <div class="flex justify-between subscription-header">
             <div class="flex gap-4 items-center">
-              <div class="subscription-logo">{{ subscription.logo }}</div>
+              <div class="subscription-logo">
+                <mat-icon>{{ subscription.logo }}</mat-icon>
+              </div>
               <div class="flex flex-col">
                 <div class="subscription-name">{{ subscription.name }}</div>
                 <div class="subscription-category">{{ subscription.category }}</div>
