@@ -45,5 +45,25 @@
 
   <div class="flex flex-col gap-6">
     <h1 class="text-2xl">Spending Overview</h1>
+    <apx-chart
+      [series]="categoryData().series"
+      [chart]="pieChartOptions.chart"
+      [labels]="categoryData().labels"
+      [responsive]="pieChartOptions.responsive"
+      [tooltip]="pieChartOptions.tooltip"
+    ></apx-chart>
+
+    <apx-chart
+      [series]="barChartOptions.series"
+      [chart]="barChartOptions.chart"
+      [dataLabels]="barChartOptions.dataLabels"
+      [plotOptions]="barChartOptions.plotOptions"
+      [yaxis]="barChartOptions.yaxis"
+      [legend]="barChartOptions.legend"
+      [fill]="barChartOptions.fill"
+      [stroke]="barChartOptions.stroke"
+      [tooltip]="barChartOptions.tooltip"
+      [xaxis]="barChartOptions.xaxis"
+    ></apx-chart>
   </div>
 </div>
