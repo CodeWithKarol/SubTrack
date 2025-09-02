@@ -20,9 +20,10 @@ import {
   ApexTooltip,
   ApexXAxis,
   ApexYAxis,
-  NgApexchartsModule,
+  NgApexchartsModule
 } from 'ng-apexcharts';
 import { CurrencyPipe } from '@angular/common';
+import { AddSubscriptionDialog } from '../add-subscription-dialog/add-subscription-dialog';
 
 export type PieChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -199,6 +200,18 @@ export class Dashboard {
         tap((updatedSubscription: Subscription) =>
           this.subscriptionsData.updateSubscription(updatedSubscription),
         ),
+      )
+      .subscribe();
+  }
+
+  addSubscription(): void {
+    this.dialog
+      .open(AddSubscriptionDialog)
+      .afterClosed()
+      .pipe(
+        take(1),
+        filter((result: Subscription) => Boolean(result)),
+        tap((result: Subscription) => this.subscriptionsData.addSubscription(result)),
       )
       .subscribe();
   }

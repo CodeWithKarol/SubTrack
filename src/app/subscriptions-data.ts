@@ -81,4 +81,8 @@ export class Subscriptions {
       subs.map((sub) => (sub.id === updatedSub.id ? updatedSub : sub)),
     );
   }
+
+  addSubscription(newSub: Subscription): void {
+    this.subscriptions.update((subs) => [...subs, newSub]);
+  }
 }
