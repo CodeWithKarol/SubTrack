@@ -28,7 +28,7 @@ export type SubscriptionCategory =
   | 'Transportation'
   | 'Books & Audiobooks';
 
-export const subscriptionIcons: string[] = [
+export const subscriptionIcons: SubscriptionIcon[] = [
   'video_library', // Streaming Video
   'music_note', // Streaming Music
   'sports_esports', // Gaming

@@ -20,8 +20,9 @@ import {
   ApexTooltip,
   ApexXAxis,
   ApexYAxis,
-  NgApexchartsModule
+  NgApexchartsModule,
 } from 'ng-apexcharts';
+import { CurrencyPipe } from '@angular/common';
 
 export type PieChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -53,6 +54,7 @@ export type BarChartOptions = {
     MatButtonModule,
     MatDialogModule,
     NgApexchartsModule,
+    CurrencyPipe,
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',

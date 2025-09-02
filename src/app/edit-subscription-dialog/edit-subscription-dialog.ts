@@ -20,8 +20,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
-import { Subscription, SubscriptionCategory } from '../subscription.model';
+import { Subscription, SubscriptionCategory, subscriptionIcons } from '../subscription.model';
 import moment, { Moment } from 'moment';
+import { MatIconModule } from '@angular/material/icon';
 
 export const CUSTOM_DATE_FORMATS = {
   parse: { dateInput: 'yyyy-MM-DD' },
@@ -48,6 +49,7 @@ export const CUSTOM_DATE_FORMATS = {
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatIconModule,
   ],
   templateUrl: './edit-subscription-dialog.html',
   styleUrl: './edit-subscription-dialog.scss',
@@ -80,7 +82,7 @@ export class EditSubscriptionDialog {
   });
   protected subscriptionIcon = new FormControl<string>(this.data.subscription.logo, {
     nonNullable: true,
-    validators: [],
+    validators: [Validators.required],
   });
 
   protected form = new FormGroup({
@@ -93,6 +95,7 @@ export class EditSubscriptionDialog {
   });
 
   protected selectedCategory = signal(this.data.subscription.category);
+  protected selectedIcon = signal(this.data.subscription.logo);
   protected readonly POPULAR_SUBSCRIPTION_CATEGORIES: SubscriptionCategory[] = [
     'Streaming Video',
     'Streaming Music',
@@ -110,6 +113,8 @@ export class EditSubscriptionDialog {
     'Transportation',
     'Books & Audiobooks',
   ];
+
+  protected readonly CATEGORY_ICONS = subscriptionIcons;
 
   submitForm(): void {
     if (!this.form.valid) {
