@@ -20,10 +20,11 @@ import {
   ApexTooltip,
   ApexXAxis,
   ApexYAxis,
-  NgApexchartsModule
+  NgApexchartsModule,
 } from 'ng-apexcharts';
 import { CurrencyPipe } from '@angular/common';
 import { AddSubscriptionDialog } from '../add-subscription-dialog/add-subscription-dialog';
+import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 
 export type PieChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -61,6 +62,10 @@ export type BarChartOptions = {
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
+  firestore = inject(Firestore);
+  itemCollection = collection(this.firestore, 'subscriptions');
+  item$ = collectionData<any>(this.itemCollection);
+
   private readonly subscriptionsData = inject(Subscriptions);
   private readonly dialog = inject(MatDialog);
   protected subscriptions = this.subscriptionsData.subscriptionsData;
@@ -163,6 +168,12 @@ export class Dashboard {
     },
     legend: {},
   };
+
+  constructor() {
+    this.item$.subscribe((data) => {
+      console.log(data);
+    });
+  }
 
   deleteSubscription(subscriptionId: number): void {
     const subscription = this.subscriptions().find((sub) => sub.id === subscriptionId);
