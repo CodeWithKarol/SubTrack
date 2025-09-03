@@ -1,4 +1,4 @@
-import { Component, computed, inject, Injector, runInInjectionContext } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Header } from '../header/header';
@@ -62,7 +62,6 @@ export type BarChartOptions = {
 })
 export class Dashboard {
   private firestoreApi = inject(FirestoreApi);
-  private injector = inject(Injector);
   private readonly dialog = inject(MatDialog);
   protected subscriptions = this.firestoreApi.subscriptions;
   protected totalCost = this.firestoreApi.totalCost;
@@ -184,11 +183,7 @@ export class Dashboard {
       .pipe(
         take(1),
         filter((result: boolean) => Boolean(result)),
-        tap(() =>
-          runInInjectionContext(this.injector, () =>
-            this.firestoreApi.removeSubscription(subscriptionId),
-          ),
-        ),
+        tap(() => this.firestoreApi.removeSubscription(subscriptionId)),
       )
       .subscribe();
   }
@@ -207,9 +202,7 @@ export class Dashboard {
         take(1),
         filter((result: Subscription) => Boolean(result)),
         tap((updatedSubscription: Subscription) =>
-          runInInjectionContext(this.injector, () =>
-            this.firestoreApi.updateSubscription(updatedSubscription),
-          ),
+          this.firestoreApi.updateSubscription(updatedSubscription),
         ),
       )
       .subscribe();
@@ -222,9 +215,7 @@ export class Dashboard {
       .pipe(
         take(1),
         filter((result: SubscriptionDto) => Boolean(result)),
-        tap((result: SubscriptionDto) =>
-          runInInjectionContext(this.injector, () => this.firestoreApi.addSubscription(result)),
-        ),
+        tap((result: SubscriptionDto) => this.firestoreApi.addSubscription(result)),
       )
       .subscribe();
   }

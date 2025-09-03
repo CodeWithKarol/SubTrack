@@ -3,7 +3,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { CurrencyPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { FirestoreApi } from '../firestore-api';
+import { AuthApi } from '../auth-api';
 
 @Component({
   selector: 'app-header',
@@ -12,15 +12,15 @@ import { FirestoreApi } from '../firestore-api';
   styleUrl: './header.scss',
 })
 export class Header {
-  private readonly firestoreApi = inject(FirestoreApi);
-  currentUserId = this.firestoreApi.currentUserId;
+  private readonly authApi = inject(AuthApi);
+  currentUserId = this.authApi.currentUserId;
   totalCost = input.required<number>();
 
   login() {
-    this.firestoreApi.login();
+    this.authApi.login();
   }
 
   logout() {
-    this.firestoreApi.logout();
+    this.authApi.logout();
   }
 }
