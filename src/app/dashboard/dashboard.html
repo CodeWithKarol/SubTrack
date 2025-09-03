@@ -1,4 +1,4 @@
-<app-header [totalCost]="totalCost()"/>
+<app-header [totalCost]="totalCost()" />
 
 <div class="flex flex-col gap-6 p-4">
   <div class="flex flex-col gap-6">
@@ -11,7 +11,8 @@
         <mat-card
           appearance="outlined"
           class="flex-1 min-w-[350px] p-6"
-          [class]="'status-' + subscription.status.toLowerCase()">
+          [class]="'status-' + subscription.status.toLowerCase()"
+        >
           <div class="flex justify-between subscription-header">
             <div class="flex gap-4 items-center">
               <div class="subscription-logo">
@@ -38,8 +39,8 @@
             </div>
 
             <span class="status-badge" [class]="subscription.status.toLowerCase()">{{
-                subscription.status
-              }}</span>
+              subscription.status
+            }}</span>
           </div>
         </mat-card>
       } @empty {

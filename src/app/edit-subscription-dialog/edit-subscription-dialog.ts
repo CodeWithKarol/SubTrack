@@ -20,7 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
-import { Subscription, SubscriptionCategory, subscriptionIcons } from '../subscription.model';
+import { SubscriptionCategory, SubscriptionDto, subscriptionIcons } from '../subscription.model';
 import moment, { Moment } from 'moment';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -122,7 +122,7 @@ export class EditSubscriptionDialog {
       return;
     }
 
-    const updatedSubscription: Subscription = {
+    const updatedSubscription: SubscriptionDto = {
       ...this.data.subscription,
       name: this.subscriptionName.value,
       category: this.subscriptionCategory.value,

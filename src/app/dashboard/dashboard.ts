@@ -1,10 +1,9 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, Injector, runInInjectionContext } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { Subscriptions } from '../subscriptions-data';
 import { Header } from '../header/header';
 import { MatButtonModule } from '@angular/material/button';
-import { Subscription } from '../subscription.model';
+import { Subscription, SubscriptionDto } from '../subscription.model';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DeleteSubscriptionDialog } from '../delete-subscription-dialog/delete-subscription-dialog';
 import { filter, take, tap } from 'rxjs';
@@ -24,7 +23,7 @@ import {
 } from 'ng-apexcharts';
 import { CurrencyPipe } from '@angular/common';
 import { AddSubscriptionDialog } from '../add-subscription-dialog/add-subscription-dialog';
-import { collection, collectionData, Firestore } from '@angular/fire/firestore';
+import { FirestoreApi } from '../firestore-api';
 
 export type PieChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -62,17 +61,14 @@ export type BarChartOptions = {
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
-  firestore = inject(Firestore);
-  itemCollection = collection(this.firestore, 'subscriptions');
-  item$ = collectionData<any>(this.itemCollection);
-
-  private readonly subscriptionsData = inject(Subscriptions);
+  private firestoreApi = inject(FirestoreApi);
+  private injector = inject(Injector);
   private readonly dialog = inject(MatDialog);
-  protected subscriptions = this.subscriptionsData.subscriptionsData;
-  protected totalCost = this.subscriptionsData.totalCost;
+  protected subscriptions = this.firestoreApi.subscriptions;
+  protected totalCost = this.firestoreApi.totalCost;
   // Computed property to group and sum costs by category
   protected categoryData = computed(() => {
-    const subscriptions = this.subscriptionsData.subscriptionsData();
+    const subscriptions = this.firestoreApi.subscriptions();
     const categoryMap = new Map<string, number>();
 
     // Group by category and sum costs
@@ -170,12 +166,10 @@ export class Dashboard {
   };
 
   constructor() {
-    this.item$.subscribe((data) => {
-      console.log(data);
-    });
+    this.firestoreApi.getSubscriptions();
   }
 
-  deleteSubscription(subscriptionId: number): void {
+  deleteSubscription(subscriptionId: string): void {
     const subscription = this.subscriptions().find((sub) => sub.id === subscriptionId);
 
     if (!subscription) {
@@ -190,12 +184,16 @@ export class Dashboard {
       .pipe(
         take(1),
         filter((result: boolean) => Boolean(result)),
-        tap(() => this.subscriptionsData.removeSubscription(subscriptionId)),
+        tap(() =>
+          runInInjectionContext(this.injector, () =>
+            this.firestoreApi.removeSubscription(subscriptionId),
+          ),
+        ),
       )
       .subscribe();
   }
 
-  editSubscription(subscriptionId: number): void {
+  editSubscription(subscriptionId: string): void {
     const subscription = this.subscriptions().find((sub) => sub.id === subscriptionId);
 
     if (!subscription) {
@@ -209,7 +207,9 @@ export class Dashboard {
         take(1),
         filter((result: Subscription) => Boolean(result)),
         tap((updatedSubscription: Subscription) =>
-          this.subscriptionsData.updateSubscription(updatedSubscription),
+          runInInjectionContext(this.injector, () =>
+            this.firestoreApi.updateSubscription(updatedSubscription),
+          ),
         ),
       )
       .subscribe();
@@ -221,8 +221,10 @@ export class Dashboard {
       .afterClosed()
       .pipe(
         take(1),
-        filter((result: Subscription) => Boolean(result)),
-        tap((result: Subscription) => this.subscriptionsData.addSubscription(result)),
+        filter((result: SubscriptionDto) => Boolean(result)),
+        tap((result: SubscriptionDto) =>
+          runInInjectionContext(this.injector, () => this.firestoreApi.addSubscription(result)),
+        ),
       )
       .subscribe();
   }

@@ -1,5 +1,5 @@
 export interface Subscription {
-  id: number;
+  id: string;
   name: string;
   category: SubscriptionCategory;
   cost: number;
@@ -8,6 +8,8 @@ export interface Subscription {
   logo: SubscriptionIcon;
   description: string;
 }
+
+export type SubscriptionDto = Omit<Subscription, 'id'>;
 
 export type SubscriptionStatus = 'active' | 'expiring' | 'expired' | 'cancelled' | 'paused';
 
