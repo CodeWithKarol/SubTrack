@@ -15,9 +15,10 @@
       <div class="total-amount">{{ totalCost() | currency }}</div>
     </div>
 
-    <div class="notifications-section">
-      <mat-icon class="notification-icon">notifications</mat-icon>
-      <span class="notification-text">Notifications</span>
-    </div>
+    @if (!currentUserId()) {
+      <button matButton="filled" (click)="login()">Login</button>
+    } @else {
+      <button matButton="filled" (click)="logout()">Logout</button>
+    }
   </div>
 </mat-toolbar>
