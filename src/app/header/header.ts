@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CurrencyPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthApi } from '../auth-api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,12 +14,8 @@ import { AuthApi } from '../auth-api';
 })
 export class Header {
   private readonly authApi = inject(AuthApi);
-  currentUserId = this.authApi.currentUserId;
+  private readonly router = inject(Router);
   totalCost = input.required<number>();
-
-  login() {
-    this.authApi.login();
-  }
 
   logout() {
     this.authApi.logout();

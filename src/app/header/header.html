@@ -15,10 +15,8 @@
       <div class="total-amount">{{ totalCost() | currency }}</div>
     </div>
 
-    @if (!currentUserId()) {
-      <button matButton="filled" (click)="login()">Login</button>
-    } @else {
-      <button matButton="filled" (click)="logout()">Logout</button>
-    }
+
+    <button matButton="filled" (click)="logout()">Logout</button>
+
   </div>
 </mat-toolbar>
