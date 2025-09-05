@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AuthApi } from '../auth-api';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
-  imports: [MatButtonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  imports: [MatButtonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
