@@ -30,9 +30,14 @@ export class Login {
   });
 
   async login(): Promise<void> {
+    if (!this.loginForm.valid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+
     try {
       const user = await this.authApi.login(this.email.value, this.password.value);
-
+      console.log('Logged in user:', user);
       this.router.navigate(['/dashboard']);
     } catch (error) {
       console.error('Error logging in:', error);

@@ -4,3 +4,15 @@
   align-items: center;
   height: 100vh;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 450px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: var(--mat-sys-surface);
+}
