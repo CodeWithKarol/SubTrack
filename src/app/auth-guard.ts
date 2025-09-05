@@ -1,17 +1,20 @@
-import { computed, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthApi } from './auth-api';
+import { Auth, user } from '@angular/fire/auth';
+import { map } from 'rxjs';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  const authApi = inject(AuthApi);
+  const auth = inject(Auth);
+  const user$ = user(auth);
   const router = inject(Router);
 
-  const isLoggedIn = computed(() => !!authApi.currentUserId());
-
-  if (!isLoggedIn()) {
-    router.navigate(['/login']);
-    return false;
-  }
-
-  return true;
+  return user$.pipe(
+    map((user) => {
+      if (!user) {
+        router.navigate(['/login']);
+        return false;
+      }
+      return true;
+    }),
+  );
 };

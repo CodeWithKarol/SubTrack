@@ -1,6 +1,13 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { inject, Injectable } from '@angular/core';
+import {
+  Auth,
+  signInWithEmailAndPassword,
+  signOut,
+  user,
+  UserCredential,
+} from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -8,21 +15,20 @@ import { Router } from '@angular/router';
 export class AuthApi {
   private readonly auth = inject(Auth);
   private readonly router = inject(Router);
-  currentUserId = signal<string | null>(null);
+  private user$ = user(this.auth);
+  $user = toSignal(this.user$, { initialValue: null });
 
   async logout(): Promise<void> {
-    await this.auth.signOut();
-
-    this.currentUserId.set(null);
-
-    this.router.navigate(['/login']);
+    try {
+      await signOut(this.auth);
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Error logging out:', error);
+      throw error;
+    }
   }
 
-  async login(): Promise<void> {
-    const user = await signInWithEmailAndPassword(this.auth, 'kmodelski93@gmail.com', 'test123');
-
-    this.currentUserId.set(user.user.uid);
-
-    this.router.navigate(['/dashboard']);
+  async login(username: string, password: string): Promise<UserCredential> {
+    return signInWithEmailAndPassword(this.auth, username, password);
   }
 }

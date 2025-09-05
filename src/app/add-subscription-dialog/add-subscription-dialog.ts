@@ -1,18 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
   MatDialogRef,
-  MatDialogTitle,
+  MatDialogTitle
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -22,6 +16,7 @@ import { SubscriptionCategory, subscriptionIcons } from '../subscription.model';
 import moment, { Moment } from 'moment';
 import { MatIconModule } from '@angular/material/icon';
 import { provideMomentDateAdapter } from '@angular/material-moment-adapter';
+import { AuthApi } from '../auth-api';
 
 export const CUSTOM_DATE_FORMATS = {
   parse: { dateInput: 'yyyy-MM-DD' },
@@ -55,6 +50,8 @@ export const CUSTOM_DATE_FORMATS = {
 })
 export class AddSubscriptionDialog {
   private readonly dialogRef = inject(MatDialogRef<AddSubscriptionDialog>);
+  $user = inject(AuthApi).$user;
+
   protected subscriptionName = new FormControl<string>('', {
     nonNullable: true,
     validators: [Validators.required, Validators.minLength(3)],
@@ -128,6 +125,7 @@ export class AddSubscriptionDialog {
       description: this.subscriptionDescription.value,
       logo: this.subscriptionIcon.value,
       status: 'active',
+      userId: this.$user()?.uid ?? '',
     };
 
     this.dialogRef.close(newSubscription);

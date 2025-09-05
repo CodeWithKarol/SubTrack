@@ -1,1 +1,15 @@
-<button matButton="filled" (click)="login()">Login</button>
+<form [formGroup]="loginForm" class="flex flex-col gap-4 w-100">
+  <mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" type="email"/>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Password</mat-label>
+    <input matInput formControlName="password" type="password">
+  </mat-form-field>
+
+  <button matButton="filled" (click)="login()">Login</button>
+</form>
+
+

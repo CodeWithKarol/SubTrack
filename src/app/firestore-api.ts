@@ -8,7 +8,7 @@ import {
   query,
   setDoc,
   updateDoc,
-  where
+  where,
 } from '@angular/fire/firestore';
 import { Subscription, SubscriptionDto } from './subscription.model';
 import { AuthApi } from './auth-api';
@@ -18,13 +18,19 @@ import { AuthApi } from './auth-api';
 })
 export class FirestoreApi {
   private readonly firestore = inject(Firestore);
-  private readonly userId = inject(AuthApi).currentUserId() ?? '';
+  private readonly auth = inject(AuthApi);
   subscriptions = signal<Subscription[]>([]);
   totalCost = computed(() => this.subscriptions().reduce((acc, sub) => acc + sub.cost, 0));
 
   async getSubscriptions(): Promise<void> {
+    const userId = this.auth.$user()?.uid;
+
+    if (!userId) {
+      return;
+    }
+
     const subscriptionsRef = collection(this.firestore, 'subscriptions');
-    const q = query(subscriptionsRef, where('userId', '==', this.userId));
+    const q = query(subscriptionsRef, where('userId', '==', userId));
 
     const data = await getDocs(q);
     const subscriptions = data.docs.map((doc) => doc.data() as Subscription);

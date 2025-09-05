@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { Header } from '../header/header';
@@ -24,6 +24,7 @@ import {
 import { CurrencyPipe } from '@angular/common';
 import { AddSubscriptionDialog } from '../add-subscription-dialog/add-subscription-dialog';
 import { FirestoreApi } from '../firestore-api';
+import { Auth } from '@angular/fire/auth';
 
 export type PieChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -60,8 +61,9 @@ export type BarChartOptions = {
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
   private firestoreApi = inject(FirestoreApi);
+  private readonly auth = inject(Auth);
   private readonly dialog = inject(MatDialog);
   protected subscriptions = this.firestoreApi.subscriptions;
   protected totalCost = this.firestoreApi.totalCost;
@@ -164,7 +166,7 @@ export class Dashboard {
     legend: {},
   };
 
-  constructor() {
+  ngOnInit(): void {
     this.firestoreApi.getSubscriptions();
   }
 
