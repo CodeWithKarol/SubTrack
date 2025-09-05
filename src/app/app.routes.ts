@@ -15,6 +15,10 @@ export const routes: Routes = [
     path: 'register',
     loadComponent: () => import('./register/register').then((c) => c.Register),
   },
+  {
+    path: 'forget-password',
+    loadComponent: () => import('./forget-password/forget-password').then((c) => c.ForgetPassword),
+  },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'dashboard' },
 ];
