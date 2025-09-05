@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -11,6 +11,8 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 export function passwordsMatchValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -30,14 +32,19 @@ export function passwordsMatchValidator(): ValidatorFn {
   styleUrl: './register.scss',
 })
 export class Register {
-  protected email = new FormControl('', { nonNullable: true, validators: [Validators.required] });
+  private readonly auth = inject(Auth);
+  private readonly router = inject(Router);
+  protected email = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required, Validators.email],
+  });
   protected password = new FormControl('', {
     nonNullable: true,
-    validators: [Validators.required],
+    validators: [Validators.required, Validators.minLength(6)],
   });
   protected confirmPassword = new FormControl('', {
     nonNullable: true,
-    validators: [Validators.required],
+    validators: [Validators.required, Validators.minLength(6)],
   });
 
   protected registerForm = new FormGroup(
@@ -49,12 +56,22 @@ export class Register {
     { validators: passwordsMatchValidator(), updateOn: 'blur' },
   );
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (!this.registerForm.valid) {
       this.registerForm.markAllAsTouched();
       return;
     }
 
-    console.log('Form Submitted', this.registerForm.value);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        this.auth,
+        this.email.value,
+        this.password.value,
+      );
+      console.log('User registered:', userCredential);
+      this.router.navigate(['/dashboard']);
+    } catch (error) {
+      console.error('Error registering user:', error);
+    }
   }
 }
