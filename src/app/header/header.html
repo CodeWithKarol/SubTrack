@@ -1,0 +1,22 @@
+<mat-toolbar class="header-toolbar">
+  <div class="brand-section">
+    <div class="brand-title">
+      <mat-icon class="brand-icon">account_balance_wallet</mat-icon>
+      <span class="app-name">SubTrack</span>
+    </div>
+    <span class="brand-subtitle">Manage your subscriptions</span>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="header-actions">
+    <div class="total-section">
+      <div class="total-label">Monthly Total</div>
+      <div class="total-amount">{{ totalCost() | currency }}</div>
+    </div>
+
+
+    <button matButton="filled" (click)="logout()">Logout</button>
+
+  </div>
+</mat-toolbar>

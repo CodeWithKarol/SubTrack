@@ -1,0 +1,75 @@
+<app-header [totalCost]="totalCost()" />
+
+<div class="flex flex-col gap-6 p-6">
+  <div class="flex flex-col gap-6">
+    <div class="flex justify-between items-center">
+      <h1 class="text-2xl">Your Subscriptions</h1>
+      <button matButton="filled" (click)="addSubscription()">+ Add Subscription</button>
+    </div>
+    <div class="flex gap-4 flex-wrap">
+      @for (subscription of subscriptions(); track subscription.id) {
+        <mat-card
+          appearance="outlined"
+          class="flex-1 min-w-[350px] p-6"
+          [class]="'status-' + subscription.status.toLowerCase()"
+        >
+          <div class="flex justify-between subscription-header">
+            <div class="flex gap-4 items-center">
+              <div class="subscription-logo">
+                <mat-icon>{{ subscription.logo }}</mat-icon>
+              </div>
+              <div class="flex flex-col">
+                <div class="subscription-name">{{ subscription.name }}</div>
+                <div class="subscription-category">{{ subscription.category }}</div>
+              </div>
+            </div>
+            <div class="flex gap-1 subscription-actions">
+              <button matIconButton (click)="editSubscription(subscription.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button matIconButton (click)="deleteSubscription(subscription.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="flex justify-between items-center mt-4 subscription-details">
+            <div class="flex flex-col">
+              <div class="cost">{{ subscription.cost | currency }}</div>
+              <div class="billing-date">Next: {{ subscription.billingDate }}</div>
+            </div>
+
+            <span class="status-badge" [class]="subscription.status.toLowerCase()">{{
+              subscription.status
+            }}</span>
+          </div>
+        </mat-card>
+      } @empty {
+        <div>No subscriptions found. Add a new subscription to get started!</div>
+      }
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-6">
+    <h1 class="text-2xl">Spending Overview</h1>
+    <apx-chart
+      [series]="categoryData().series"
+      [chart]="pieChartOptions.chart"
+      [labels]="categoryData().labels"
+      [responsive]="pieChartOptions.responsive"
+      [tooltip]="pieChartOptions.tooltip"
+    ></apx-chart>
+
+    <apx-chart
+      [series]="barChartOptions.series"
+      [chart]="barChartOptions.chart"
+      [dataLabels]="barChartOptions.dataLabels"
+      [plotOptions]="barChartOptions.plotOptions"
+      [yaxis]="barChartOptions.yaxis"
+      [legend]="barChartOptions.legend"
+      [fill]="barChartOptions.fill"
+      [stroke]="barChartOptions.stroke"
+      [tooltip]="barChartOptions.tooltip"
+      [xaxis]="barChartOptions.xaxis"
+    ></apx-chart>
+  </div>
+</div>

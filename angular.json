@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "SubTrack": {
+    "subtrack": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -58,10 +58,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "SubTrack:build:production"
+              "buildTarget": "subtrack:build:production"
             },
             "development": {
-              "buildTarget": "SubTrack:build:development"
+              "buildTarget": "subtrack:build:development"
             }
           },
           "defaultConfiguration": "development"

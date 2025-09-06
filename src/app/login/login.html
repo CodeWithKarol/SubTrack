@@ -1,0 +1,17 @@
+<form [formGroup]="loginForm">
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" type="email"/>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput formControlName="password" type="password">
+  </mat-form-field>
+
+  <span><a routerLink="/register">Register</a> | <a routerLink="/forget-password">Forget password?</a></span>
+
+  <button matButton="filled" (click)="login()">Login</button>
+</form>
+
+
